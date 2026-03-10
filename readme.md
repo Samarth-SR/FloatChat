@@ -14,6 +14,7 @@ The system integrates structured oceanographic datasets, semantic retrieval, and
   </a>
 </p>
 ---
+
 # Architecture Overview
 
 ```
@@ -128,5 +129,6 @@ Queryable Knowledge Layer
 - Context-aware scientific responses
 - Visualization of ocean parameters
 - Scalable ingestion of ARGO float data
+
 
 
