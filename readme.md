@@ -5,7 +5,6 @@ It enables natural language exploration, retrieval, and visualization of large-s
 
 The system integrates structured oceanographic datasets, semantic retrieval, and large language models to provide contextual answers to scientific queries.
 
----
 
 ## Demo
 
@@ -14,6 +13,7 @@ The system integrates structured oceanographic datasets, semantic retrieval, and
     <img src="images/floatchat.png" width="700">
   </a>
 </p>
+---
 # Architecture Overview
 
 ```
@@ -128,4 +128,5 @@ Queryable Knowledge Layer
 - Context-aware scientific responses
 - Visualization of ocean parameters
 - Scalable ingestion of ARGO float data
+
 
