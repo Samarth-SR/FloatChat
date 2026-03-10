@@ -1,0 +1,727 @@
+chat.py code 
+import streamlit as st
+from graph import render_graph
+from map_display import render_map
+import pandas as pd
+
+def chat_ui():
+    st.set_page_config(page_title="FloatChat AI")
+    col1, col2 = st.columns([8, 2])
+    with col1:
+        st.title("FloatChat AI")
+    with col2:
+        if "messages" in st.session_state and st.session_state.messages:
+            # chat history to dataframe
+            export_data = []
+            for msg in st.session_state.messages:
+                export_data.append({
+                    "role": msg["role"],
+                    "content": msg.get("content", ""),
+                    "extra": str(msg.get("raw", "")) if msg.get("raw") else ""
+                })
+            df = pd.DataFrame(export_data)
+
+            csv_bytes = df.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="⬇️ Download",
+                data=csv_bytes,
+                file_name="floatchat_history.csv",
+                mime="text/csv",
+                use_container_width=True
+            )
+
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # past messages
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            if msg.get("raw"):  # graph/map
+                if msg["raw"]["type"] == "graph":
+                    render_graph(msg["raw"])
+                elif msg["raw"]["type"] == "map":
+                    render_map(msg["raw"])
+            else:
+                st.write(msg["content"])
+
+    # input box at bottom
+    if user_input := st.chat_input("Type your message here..."):
+        # show user message 
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
+            st.write(user_input)
+
+        # get backend response
+        response = dummy_backend(user_input)
+
+        # show AI response 
+        if response["type"] == "text":
+            st.session_state.messages.append({"role": "assistant", "content": response["content"]})
+            with st.chat_message("assistant"):
+                st.write(response["content"])
+        else:
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": f"[{response['type'].upper()} OUTPUT]",
+                "raw": response
+            })
+            with st.chat_message("assistant"):
+                if response["type"] == "graph":
+                    render_graph(response)
+                elif response["type"] == "map":
+                    render_map(response)
+
+def dummy_backend(user_input):
+    # dummy
+    if "ocean" in user_input:
+        return {
+            "type": "graph",
+            "graph_type": "hist",
+            "y": [5, 7, 8, 5, 6, 9, 10, 10, 8, 6, 5, 7, 6, 8, 9],
+            "bin": 5,
+            "title": "Temperature Frequency Distribution",
+            "xlabel": "Temperature Ranges"
+        }
+    
+    return {"type": "text", "content": "This is a normal chat response."}
+
+graph.py code
+import matplotlib.pyplot as plt
+import streamlit as st
+import pandas as pd
+
+def render_graph(graph_data):
+    x = graph_data.get("x", [])
+    title = graph_data.get("title", "")
+    graph_type = graph_data.get("graph_type", "line")
+
+    fig, ax = plt.subplots()
+    # plot both y1 and y2 on the same axis
+    if "y1" in graph_data and "y2" in graph_data:
+        y1 = graph_data.get("y1", [])
+        y2 = graph_data.get("y2", [])
+
+        ax.plot(x, y1, marker="o", label=graph_data.get("region1", "Y1"), color="tab:blue")
+        ax.plot(x, y2, marker="s", linestyle="--", label=graph_data.get("region2", "Y2"), color="tab:orange")
+
+        ax.set_xlabel(graph_data.get("xlabel", "X-axis"))
+        ax.set_ylabel(f'{graph_data.get("ylabel1", "Y1")} and {graph_data.get("ylabel2", "Y2")}')
+        ax.set_title(title)
+        ax.legend()
+    # plot single y
+    else:
+        y = graph_data.get("y", [])
+        if graph_type == "bar":
+            ax.bar(x, y)
+        elif graph_type == "line":
+            ax.plot(x, y)
+        elif graph_type == "pie":
+            fig, ax = plt.subplots()
+            ax.pie(y, labels=x, autopct='%1.1f%%')
+            ax.set_title(title)
+        elif graph_type == "scatter":
+            ax.scatter(x, y)
+        elif graph_type == "hist":
+            ax.hist(y, bins=10)   
+        else:
+            ax.plot(x, y, marker="o")
+        ax.set_xlabel(graph_data.get("xlabel"))
+        ax.set_ylabel(graph_data.get("ylabel"))
+        ax.set_title(title)
+    st.pyplot(fig)
+
+mapdisplay.py code 
+
+import streamlit as st
+import folium
+from streamlit_folium import st_folium
+
+def render_map(map_data):
+    lat = map_data.get("lat", 0)
+    lon = map_data.get("lon", 0)
+    zoom = map_data.get("zoom", 10)
+
+    st.subheader("Map Location")
+    m = folium.Map(location=[lat, lon], zoom_start=zoom)
+    folium.Marker([lat, lon], tooltip="Location").add_to(m)
+    st_folium(m, width=700, height=500)
+
+streamlit_argo_frontend.py code
+
+import streamlit as st
+import requests
+import plotly.graph_objects as go
+from streamlit_folium import st_folium
+import folium
+import time
+from typing import List, Dict, Any
+
+# Configuration
+BACKEND_BASE = "http://localhost:8000"
+TIMEOUT = 6
+
+# Helpers to call backend
+def call_backend_query(query: str) -> Dict[str, Any]:
+    url = f"{BACKEND_BASE}/query"
+    try:
+        r = requests.post(url, json={"query": query}, timeout=TIMEOUT)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        return {"error": str(e), "mock": mock_query_response(query)}
+
+
+def get_profiles_nearby(lat: float, lon: float, radius_km: float=100) -> List[Dict[str, Any]]:
+    url = f"{BACKEND_BASE}/profiles/nearby"
+    params = {"lat": lat, "lon": lon, "radius_km": radius_km}
+    try:
+        r = requests.get(url, params=params, timeout=TIMEOUT)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        return mock_profiles_nearby(lat, lon, radius_km)
+
+
+def get_profile(profile_id: str) -> Dict[str, Any]:
+    url = f"{BACKEND_BASE}/profile/{profile_id}"
+    try:
+        r = requests.get(url, timeout=TIMEOUT)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        return mock_profile(profile_id)
+
+
+def compare_profiles(ids: List[str], params: List[str]) -> Dict[str, Any]:
+    url = f"{BACKEND_BASE}/profiles/compare"
+    try:
+        r = requests.post(url, json={"ids": ids, "params": params}, timeout=TIMEOUT)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        return {"error": str(e), "mock": {"ids": ids, "params": params}}
+
+
+# --- Mock data (fallback demo) ---
+
+def mock_query_response(query: str):
+    return {
+        "answer": f"(mock) I understood: '{query}'. I found 3 matching profiles near equator.",
+        "results": [
+            {"id": "P1", "lat": 0.5, "lon": 45.0, "date": "2023-03-05"},
+            {"id": "P2", "lat": -0.2, "lon": 42.0, "date": "2023-03-18"},
+        ]
+    }
+
+
+def mock_profiles_nearby(lat, lon, rad):
+    return [
+        {"id": "P1", "lat": lat + 0.5, "lon": lon + 1.0, "date": "2023-03-05"},
+        {"id": "P2", "lat": lat - 0.4, "lon": lon - 0.8, "date": "2023-03-18"},
+    ]
+
+
+def mock_profile(profile_id):
+    depths = list(range(0, 1001, 10))
+    temp = [20 - 0.01*d for d in depths]
+    sal = [35 + 0.005*d for d in depths]
+    return {"id": profile_id, "depth": depths, "temperature": temp, "salinity": sal, "lat": 0.1, "lon": 45.1, "date": "2023-03-05"}
+
+
+# --- Plotting helpers ---
+
+def plot_profile(profile: Dict[str, Any], params: List[str]=["temperature", "salinity"]):
+    fig = go.Figure()
+    depth = profile.get("depth")
+    if not depth:
+        st.warning("No depth data available for this profile")
+        return None
+    for p in params:
+        if p in profile:
+            fig.add_trace(go.Scatter(x=profile[p], y=depth, mode='lines+markers', name=p))
+    fig.update_yaxes(autorange='reversed', title_text='Depth (m)')
+    fig.update_xaxes(title_text='Value')
+    fig.update_layout(height=500, margin=dict(l=40, r=20, t=30, b=40))
+    return fig
+
+
+def show_map(profiles: List[Dict[str, Any]]):
+    if not profiles:
+        st.info("No float locations to show")
+        return
+    # center map at mean coords
+    mean_lat = sum([p['lat'] for p in profiles]) / len(profiles)
+    mean_lon = sum([p['lon'] for p in profiles]) / len(profiles)
+    m = folium.Map(location=[mean_lat, mean_lon], zoom_start=4)
+    for p in profiles:
+        folium.Marker([p['lat'], p['lon']], popup=f"ID: {p['id']}<br/>{p.get('date','')}").add_to(m)
+    st_folium(m, width=700, height=400)
+
+
+# --- Streamlit UI ---
+
+st.set_page_config(page_title="Float Chat PoC - ARGO Data", layout="wide")
+st.title("Float Chat PoC - ARGO Data")
+
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    st.header("Chat")
+    query = st.text_area("Ask about ARGO data (natural language)", height=100, key='query_input')
+    if st.button("Send"):
+        if query.strip():
+            st.session_state.messages.append({"role": "user", "text": query})
+            with st.spinner("Contacting backend..."):
+                resp = call_backend_query(query)
+                time.sleep(0.2)
+            if resp.get('error'):
+                st.session_state.messages.append({"role": "assistant", "text": f"Error connecting to backend: {resp['error']} (showing mock)."})
+                # include mock answer if present
+                if resp.get('mock'):
+                    st.session_state.messages.append({"role": "assistant", "text": resp['mock']['answer']})
+            else:
+                # Prefer structured answer if available
+                answer = resp.get('answer') or resp.get('answer_text') or str(resp)
+                st.session_state.messages.append({"role": "assistant", "text": answer})
+                # store results in session for quick plotting
+                st.session_state._last_results = resp.get('results', [])
+
+    # show chat history
+    for msg in st.session_state.messages[::-1]:
+        if msg['role'] == 'assistant':
+            st.markdown(f"**Assistant:** {msg['text']}")
+        else:
+            st.markdown(f"**You:** {msg['text']}")
+
+    st.markdown("---")
+    st.subheader("Quick actions")
+    lat = st.number_input("Lat", value=0.0, format="%.4f")
+    lon = st.number_input("Lon", value=45.0, format="%.4f")
+    radius = st.slider("Radius (km)", 10, 2000, 200)
+    if st.button("Find nearby floats"):
+        profiles = get_profiles_nearby(lat, lon, radius)
+        st.session_state._last_results = profiles
+        st.success(f"Found {len(profiles)} profiles")
+
+    st.markdown("Tip: try queries like 'Show me salinity profiles near the equator in March 2023'")
+
+with col2:
+    st.header("Map")
+    profiles = st.session_state.get('_last_results', [])
+    show_map(profiles)
+
+    st.markdown("---")
+    st.header("Profile Viewer")
+    sel_id = st.selectbox("Select profile ID", options=[p['id'] for p in profiles] if profiles else [])
+    if sel_id:
+        profile = get_profile(sel_id)
+        fig = plot_profile(profile)
+        if fig:
+            st.plotly_chart(fig, use_container_width=True)
+
+    st.markdown("---")
+    st.header("Compare Profiles")
+    ids_text = st.text_input("Profile IDs (comma-separated)")
+    params_text = st.text_input("Parameters to compare (comma-separated, e.g. salinity,temperature)")
+    if st.button("Compare"):
+        ids = [s.strip() for s in ids_text.split(",") if s.strip()]
+        params = [s.strip() for s in params_text.split(",") if s.strip()]
+        if ids and params:
+            cmp = compare_profiles(ids, params)
+            st.write(cmp)
+        else:
+            st.warning("Provide at least one profile ID and one parameter")
+
+
+# Footer
+st.markdown("---")
+st.caption("This is a PoC frontend that expects a backend LLM/RAG service running on localhost. The code falls back to mock data if backend calls fail.")
+
+
+if __name__ == '__main__':
+    pass
+
+streamlit_floatAI.py
+
+import streamlit as st
+from chat import chat_ui
+
+def main():
+    chat_ui()
+
+if __name__ == "__main__":
+    main()
+
+
+(uptil here was my friend's front end code in 5 different folders)
+main.ipynb code (my ai code)
+cell 1
+# Import libraries
+try:
+    import ollama
+    import sqlite3
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import io
+    import base64
+    from IPython.display import display, Image, Markdown
+    import ipywidgets as widgets
+    from datetime import datetime, timedelta
+    import re
+    print("All modules installed properly.")
+
+except ModuleNotFoundError as module_name: 
+    print(f"the module {module_name} wasn't found")
+    
+cell 2
+import ollama
+import re
+
+class OllamaLLM:
+    """A class to interact with local Ollama models."""
+    def __init__(self, sql_model='qwen3:4b', reasoning_model='gemma3:4b'):
+        self.sql_model = sql_model
+        self.reasoning_model = reasoning_model
+        print(f"LLM handler initialized. Using '{self.sql_model}' for SQL and '{self.reasoning_model}' for reasoning.")
+
+    def ask_for_confirmation(self, query, schema):
+        # This function is stable.
+        prompt = f"""
+        You are an expert assistant. Your job is to paraphrase the user's request about oceanography data into a clear, single-sentence confirmation question.
+        The confirmation question should be like: This is the thing you want is that correct?
+        The database schema is: {schema}
+        User's request: "{query}"
+        Confirmation Question:
+        """
+        response = ollama.chat(model=self.reasoning_model, messages=[{'role': 'user', 'content': prompt}])
+        return response['message']['content'].strip()
+
+    def classify_intent(self, history, new_query):
+        """Classifies the user's intent based on the conversation history."""
+        prompt = f"""
+        You are an expert intent classifier. Your job is to determine what the user wants to do next.
+
+        Here is the conversation history:
+        {history}
+
+        Here is the new user query: "{new_query}"
+
+        Based on the new query, classify the user's intent into ONE of the following categories:
+        - NEW_QUERY: The user is asking for a completely new set of data to be plotted (e.g., asking about a different parameter or starting over).
+        - REFINE_QUERY: The user is asking for a modification of the previous query (e.g., a different sensor, a different time range).
+        - ANALYZE_DATA: The user is asking a question that can be answered by calculating something from the data that was just shown (e.g., "what is the average?", "find the max value").
+        - CLARIFY: The user is asking for more explanation about the current graph or data, without needing new data.
+
+        Your response MUST be a single word from the list above.
+
+        Intent:
+        """
+        response = ollama.chat(
+            model=self.reasoning_model,
+            messages=[{'role': 'user', 'content': prompt}]
+        )
+        return response['message']['content'].strip()
+
+    def generate_sql(self, history, schema, available_params, available_sensors):
+        """
+    Generates SQL, now using a more robust parsing method to extract the final query.
+    """
+    # The prompt is excellent. No changes are needed here.
+        prompt = f"""
+    You are an expert SQLite generation bot. Your sole purpose is to convert a user's request into a single, valid SQLite query based on the provided context.
+
+    ### Database Schema
+    {schema}
+
+    ### Available Data Values
+    - The `parameter_name` column can contain: {available_params}
+    - The `sensor_id` column can contain: {available_sensors}
+
+    ### Conversation History
+    {history}
+
+    ### STRICT Rules for Generating the Query:
+    1.  **Map to Available Values:** First, map the user's plain-language request (e.g., "saltiness") to the official `parameter_name` from the "Available Data Values" list (e.g., 'Salinity').
+    2.  **Case-Insensitive WHERE Clause:** All string comparisons in the `WHERE` clause MUST be case-insensitive. Use the `LOWER()` function on the column and the lowercase version of the value from Rule #1. Example: `WHERE LOWER(parameter_name) = 'salinity'`.
+    3.  **Column Selection:** The query MUST select the `timestamp` and `value` columns.
+    4.  **Time Filtering Logic:**
+        - If the user's time frame is measured in **days, weeks, or months** (e.g., "past 3 days", "last week"), use the `date()` function to start from the beginning of the day. Example: `WHERE timestamp >= date('now', '-3 days')`.
+        - If the user's time frame is measured in **hours, minutes, or seconds** (e.g., "past 8 hours", "last 30 minutes"), use the `datetime()` function for a precise relative time. Example: `WHERE timestamp >= datetime('now', '-8 hours')`.
+    5.  **Output Format:** Your final output MUST be only the raw SQLite query, ending in a semicolon. Do not include any explanations, comments, or markdown formatting.
+
+    ### Final SQLite Query:
+    """
+
+        response = ollama.chat(model=self.sql_model, messages=[{'role': 'user', 'content': prompt}])
+        raw_output = response['message']['content']
+
+    # --- NEW, MORE ROBUST PARSING LOGIC ---
+    # Find all occurrences of a complete SELECT statement ending in a semicolon.
+        matches = re.findall(r"(SELECT .*?;)", raw_output, re.IGNORECASE | re.DOTALL)
+
+        if matches:
+        # The last match is the final, intended query.
+            cleaned_sql = matches[-1].strip()
+            return cleaned_sql
+        else:
+        # Fallback for safety, though the above should work.
+            if "SELECT" in raw_output:
+             # Take the part after the last "SELECT" as a guess
+                last_part = raw_output.split("SELECT")[-1]
+                cleaned_sql = "SELECT" + last_part.strip()
+                if not cleaned_sql.endswith(';'):
+                    cleaned_sql += ';'
+                    return cleaned_sql
+            raise ValueError("Could not extract a valid SQL query from the LLM's response.")
+
+
+    def answer_from_data(self, df, question):
+        """Uses the reasoning LLM to answer a question based on existing data."""
+        if df is None or df.empty:
+            return "There is no data to analyze."
+        
+        # Perform basic calculations and add them to the prompt for accuracy
+        stats = ""
+        if 'value' in df.columns:
+            stats = f"""
+            Here are some pre-calculated statistics from the data:
+            - Average (mean): {df['value'].mean():.2f}
+            - Maximum value: {df['value'].max():.2f}
+            - Minimum value: {df['value'].min():.2f}
+            - Number of data points: {len(df)}
+            """
+
+        prompt = f"""
+        You are a helpful data analyst. A user has been shown a dataset and has a follow-up question.
+        {stats}
+        
+        User's question: "{question}"
+        
+        Based on the statistics and the user's question, provide a concise, natural language answer.
+        """
+        response = ollama.chat(model=self.reasoning_model, messages=[{'role': 'user', 'content': prompt}])
+        return response['message']['content']
+
+
+    
+    def explain_image(self, image_bytes, query):
+        # This function is stable.
+        prompt = f"""
+        You are a marine science expert. Analyze the provided graph, which was generated for the query: "{query}".
+        Describe the key trends, patterns, or significant anomalies.
+        """
+        response = ollama.chat(
+            model=self.reasoning_model,
+            messages=[{'role': 'user', 'content': prompt, 'images': [image_bytes]}]
+        )
+        return response['message']['content']
+
+# Re-instantiate the class with the new finetuned model
+llm = OllamaLLM(sql_model='sqlqwen3:4b', reasoning_model='gemma3:4b')
+
+cell 3
+class ConversationState:
+    """A simple class to store the state of the conversation."""
+    def __init__(self):
+        self.conversation_history = []
+        self.last_df = None
+        self.last_sql_query = ""
+
+    def add_message(self, role, content):
+        """Adds a message to the conversation history."""
+        self.conversation_history.append({"role": role, "content": content})
+
+    def get_history_string(self):
+        """Returns the conversation history as a formatted string."""
+        if not self.conversation_history:
+            return "No history yet."
+        return "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in self.conversation_history])
+
+    def clear(self):
+        """Resets the conversation state."""
+        self.conversation_history = []
+        self.last_df = None
+        self.last_sql_query = ""
+        print("[State cleared]")
+
+cell 4
+
+# Connect to an in-memory SQLite database
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+# Define the database schema
+cursor.execute('''
+CREATE TABLE sensor_data (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME NOT NULL,
+    sensor_id TEXT NOT NULL,
+    parameter_name TEXT NOT NULL,
+    depth_m INTEGER,
+    value REAL NOT NULL
+);
+''')
+
+# --- Generate Sample Data ---
+def generate_data(sensor_id, param_name, depth, start_val, days):
+    data = []
+    current_time = datetime.now()
+    for i in range(days * 24): # Hourly data
+        timestamp = current_time - timedelta(hours=i)
+        value = start_val + (i % 10) * 0.1 - 0.5 + (-1)**i * 0.2
+        data.append((timestamp, sensor_id, param_name, depth, round(value, 2)))
+    return data
+
+# Populate with data
+sensor_data = []
+sensor_data.extend(generate_data('BD10', 'Salinity', 30, 35, 10))
+sensor_data.extend(generate_data('BD10', 'Water Temperature', 30, 15, 10))
+sensor_data.extend(generate_data('CB02', 'Air Pressure', None, 1012, 10))
+
+cursor.executemany('INSERT INTO sensor_data (timestamp, sensor_id, parameter_name, depth_m, value) VALUES (?, ?, ?, ?, ?)', sensor_data)
+conn.commit()
+
+print("Database created and populated with sample data.")
+
+# Define our schema as a string to pass to the LLM
+db_schema = "Table: sensor_data, Columns: id, timestamp, sensor_id, parameter_name, depth_m, value"
+# Query for distinct parameter names
+params_df = pd.read_sql_query("SELECT DISTINCT parameter_name FROM sensor_data", conn)
+available_parameters = params_df['parameter_name'].tolist()
+
+# Query for distinct sensor IDs
+sensors_df = pd.read_sql_query("SELECT DISTINCT sensor_id FROM sensor_data", conn)
+available_sensors = sensors_df['sensor_id'].tolist()
+
+# Create formatted strings to inject into our prompt
+parameter_list_str = ", ".join(f"'{p}'" for p in available_parameters)
+sensor_list_str = ", ".join(f"'{s}'" for s in available_sensors)
+
+print("--- Data Dictionary Loaded ---")
+print(f"Available Parameters: {parameter_list_str}")
+print(f"Available Sensors: {sensor_list_str}")
+print("-----------------------------")
+
+
+cell 5
+# Helper functions (unchanged)
+def execute_query(sql_query):
+    try:
+        df = pd.read_sql_query(sql_query, conn)
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        return df.sort_values(by='timestamp')
+    except Exception as e:
+        print(f"An error occurred during SQL execution: {e}")
+        return None
+
+def plot_data(df, title):
+    if df is None or df.empty: return None
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(df['timestamp'], df['value'], marker='.', linestyle='-')
+    ax.set_title(title)
+    ax.grid(True)
+    plt.xticks(rotation=15)
+    plt.tight_layout()
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    image_bytes = buf.getvalue()
+    buf.close()
+    plt.close(fig)
+    return image_bytes
+
+# --- Main Application ---
+llm = OllamaLLM()
+state = ConversationState()
+
+def handle_new_or_refine_query(state):
+    """Handles the logic for fetching, plotting, and explaining new data."""
+    try:
+        print("\n🤖 Generating SQL...")
+        # --- UPDATE THIS LINE ---
+        sql_query = llm.generate_sql(state.get_history_string(), db_schema, parameter_list_str, sensor_list_str)
+        # ---
+        
+        state.last_sql_query = sql_query
+        display(Markdown(f"**Generated SQL:** `{sql_query}`"))
+
+        # 2. Execute Query
+        print("Executing query...")
+        data_df = execute_query(sql_query)
+        state.last_df = data_df
+
+        if data_df is None or data_df.empty:
+            display(Markdown("⚠️ **Warning:** The query returned no data. Please try a different query."))
+            state.add_message("assistant", "I couldn't find any data for that request. Can you try asking something else?")
+            return
+
+        # 3. Plot Data
+        print("Plotting data...")
+        image_bytes = plot_data(data_df, state.conversation_history[-1]['content'])
+        
+        # 4. Get Explanation
+        print("Generating explanation...")
+        explanation = llm.explain_image(image_bytes, state.conversation_history[-1]['content'])
+
+        # 5. Display Results
+        display(Markdown("---"))
+        display(Image(data=image_bytes))
+        display(Markdown(f"**Explanation:** {explanation}"))
+        state.add_message("assistant", explanation)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        state.add_message("assistant", f"I encountered an error: {e}")
+
+def chat():
+    """Main chat loop for the application."""
+    print("🌊 Welcome to the Oceanography Data Chatbot! Type 'quit' to exit.")
+    while True:
+        #print("entered the loop")
+        user_query = input("\nYou: ")
+        if user_query.lower() in ['quit', 'exit']:
+            print("Goodbye!")
+            break
+        
+        state.add_message("user", user_query)
+        print("User Query=",user_query)
+        # 1. Classify Intent
+        print("🤖 Classifying intent...")
+        intent = llm.classify_intent(state.get_history_string(), user_query)
+        display(Markdown(f"**Detected Intent:** `{intent}`"))
+
+        # 2. Route to appropriate handler
+        if intent == "NEW_QUERY":
+            # For a new query, we can optionally clear the past context
+            # state.clear()
+            # state.add_message("user", user_query)
+            handle_new_or_refine_query(state)
+        
+        elif intent == "REFINE_QUERY":
+            handle_new_or_refine_query(state)
+
+        elif intent == "ANALYZE_DATA":
+            print("🤖 Answering from existing data...")
+            answer = llm.answer_from_data(state.last_df, user_query)
+            display(Markdown(f"**Answer:** {answer}"))
+            state.add_message("assistant", answer)
+        
+        elif intent == "CLARIFY":
+            # This can be a more sophisticated handler, but for now, we'll treat it like ANALYZE
+            print("🤖 Clarifying from existing data...")
+            answer = llm.answer_from_data(state.last_df, user_query)
+            display(Markdown(f"**Answer:** {answer}"))
+            state.add_message("assistant", answer)
+        
+        else:
+            display(Markdown("I'm not sure how to handle that. Please try rephrasing your question."))
+            state.add_message("assistant", "I'm not sure how to handle that.")
+
+# Start the chat application
+
+cell 6
+chat() 

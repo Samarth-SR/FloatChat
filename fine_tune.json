@@ -1,0 +1,2014 @@
+[
+  {
+    "input": "What was the maximum temperature recorded by buoy AD10?",
+    "output": "SELECT MAX(TEMP) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the average salinity (PSAL) for buoy CB02 between 50 and 100 dbar pressure.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 50.0 AND 100.0;"
+  },
+  {
+    "input": "Retrieve all temperature and pressure readings from buoy AD10 at a latitude of -8.2858.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND latitude = -8.2858;"
+  },
+  {
+    "input": "Find the timestamp of the deepest pressure reading from any buoy where the temperature was below 10 degrees Celsius.",
+    "output": "SELECT time FROM argo_float_data WHERE TEMP < 10.0 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "Count how many salinity measurements from buoy CB02 were above 34.7 PSU.",
+    "output": "SELECT COUNT(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND PSAL > 34.7;"
+  },
+  {
+    "input": "What is the average water temperature (TEMP) for all buoys at depths greater than 500 meters?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE PRES > 500.0;"
+  },
+  {
+    "input": "List the pressure (PRES) and salinity (PSAL) values for buoy AD10 where the temperature was between 20 and 25 degrees.",
+    "output": "SELECT PRES, PSAL FROM argo_float_data WHERE N_PROF = 0 AND TEMP BETWEEN 20.0 AND 25.0;"
+  },
+  {
+    "input": "Give me the time and location (latitude, longitude) of the highest recorded temperature from buoy CB02.",
+    "output": "SELECT time, latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY TEMP DESC LIMIT 1;"
+  },
+  {
+    "input": "What was the minimum pressure value observed across all buoys with a salinity greater than 34.8?",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE PSAL > 34.8;"
+  },
+  {
+    "input": "Show the temperature, salinity, and pressure for buoy AD10 for all levels recorded on January 31, 2025.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND DATE(time) = '2025-01-31';"
+  },
+  {
+    "input": "Retrieve the unique N_PROF identifiers for all buoys that recorded a temperature above 28 degrees.",
+    "output": "SELECT DISTINCT N_PROF FROM argo_float_data WHERE TEMP > 28.0;"
+  },
+  {
+    "input": "What is the average pressure from buoy AD10 at depths less than 100 meters?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PRES < 100.0;"
+  },
+  {
+    "input": "Find the latitude and longitude where the maximum salinity was recorded from buoy CB02.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY PSAL DESC LIMIT 1;"
+  },
+  {
+    "input": "How many data points from buoy AD10 have a pressure reading exactly at 70 meters?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 70.0;"
+  },
+  {
+    "input": "What are the temperature and salinity values for buoy CB02 at the lowest recorded pressure?",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES ASC LIMIT 1;"
+  },
+  {
+    "input": "Calculate the range (max - min) of temperature for buoy AD10.",
+    "output": "SELECT MAX(TEMP) - MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the top 5 highest salinity readings and their corresponding pressures for all buoys.",
+    "output": "SELECT PSAL, PRES FROM argo_float_data ORDER BY PSAL DESC LIMIT 5;"
+  },
+  {
+    "input": "For buoy CB02, what is the temperature and pressure at the timestamp '2025-01-31 23:51:30'?",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 1 AND time = '2025-01-31 23:51:30';"
+  },
+  {
+    "input": "What is the average of temperature, salinity, and pressure for buoy AD10?",
+    "output": "SELECT AVG(TEMP), AVG(PSAL), AVG(PRES) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve all data points from buoy AD10 where the salinity is exactly 33.875.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PSAL = 33.875;"
+  },
+  {
+    "input": "List the pressure and temperature values from buoy CB02 for all readings taken in the last 4 hours of January 31, 2025.",
+    "output": "SELECT PRES, TEMP FROM argo_float_data WHERE N_PROF = 1 AND time BETWEEN '2025-01-31 20:00:00' AND '2025-01-31 23:59:59';"
+  },
+  {
+    "input": "What is the deepest pressure reached by buoy AD10?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "How many temperature readings from buoy CB02 are above 28.5 degrees?",
+    "output": "SELECT COUNT(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.5;"
+  },
+  {
+    "input": "Find the average temperature and salinity for all buoys combined.",
+    "output": "SELECT AVG(TEMP), AVG(PSAL) FROM argo_float_data;"
+  },
+  {
+    "input": "Show temperature, salinity, and pressure for buoy AD10, ordered by pressure ascending.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES ASC;"
+  },
+  {
+    "input": "What was the latest recorded salinity from buoy CB02?",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 1 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve all readings from buoy AD10 where the pressure is less than 20.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES < 20.0;"
+  },
+  {
+    "input": "What is the overall average latitude and longitude for buoy CB02?",
+    "output": "SELECT AVG(latitude), AVG(longitude) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Count the total number of data levels collected by buoy AD10.",
+    "output": "SELECT COUNT(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the temperature and salinity at the maximum pressure for each buoy.",
+    "output": "SELECT T1.N_PROF, T1.TEMP, T1.PSAL, T1.PRES FROM argo_float_data AS T1 JOIN (SELECT N_PROF, MAX(PRES) AS MaxPres FROM argo_float_data GROUP BY N_PROF) AS T2 ON T1.N_PROF = T2.N_PROF AND T1.PRES = T2.MaxPres;"
+  },
+  {
+    "input": "What's the earliest time a temperature above 28 degrees was recorded by buoy AD10?",
+    "output": "SELECT MIN(time) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where the salinity is between 34.0 and 34.5 PSU.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PSAL BETWEEN 34.0 AND 34.5;"
+  },
+  {
+    "input": "Find the number of unique pressure levels sampled by buoy CB02.",
+    "output": "SELECT COUNT(DISTINCT PRES) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "What is the average temperature at 10 meters depth from buoy AD10?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure values from buoy CB02 that are closest to a latitude of -0.7.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 ORDER BY ABS(latitude - (-0.7)) ASC LIMIT 1;"
+  },
+  {
+    "input": "Show all temperature readings from buoy AD10 at an even pressure value.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND PRES % 2 = 0;"
+  },
+  {
+    "input": "What are the temperature values for buoy CB02 at pressures between 10 and 20 dbar?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 10.0 AND 20.0;"
+  },
+  {
+    "input": "Calculate the average temperature and salinity for all data points where pressure is exactly 100 dbar.",
+    "output": "SELECT AVG(TEMP), AVG(PSAL) FROM argo_float_data WHERE PRES = 100.0;"
+  },
+  {
+    "input": "Find the total number of temperature measurements available across all buoys.",
+    "output": "SELECT COUNT(TEMP) FROM argo_float_data;"
+  },
+  {
+    "input": "List the full data row for the lowest salinity recorded by buoy AD10.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 ORDER BY PSAL ASC LIMIT 1;"
+  },
+  {
+    "input": "What is the highest pressure recorded by buoy CB02 with a temperature above 25 degrees?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 25.0;"
+  },
+  {
+    "input": "Show the last recorded temperature and salinity from buoy AD10.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "How many data points from buoy AD10 have a pressure reading above 500 dbar?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 500.0;"
+  },
+  {
+    "input": "What is the standard deviation of temperature readings from buoy CB02?",
+    "output": "SELECT STDEV(TEMP) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the temperature and pressure for all instances where salinity (PSAL) is 34.78 and it's from buoy CB02.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78;"
+  },
+  {
+    "input": "List the timestamp and temperature for buoy AD10 where the pressure is exactly 4.2 dbar.",
+    "output": "SELECT time, TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES = 4.2;"
+  },
+  {
+    "input": "For buoy AD10, what's the average salinity at a pressure of 30 dbar?",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 30.0;"
+  },
+  {
+    "input": "Show the count of readings for each unique pressure level from buoy CB02.",
+    "output": "SELECT PRES, COUNT(*) FROM argo_float_data WHERE N_PROF = 1 GROUP BY PRES;"
+  },
+  {
+    "input": "Which buoy (N_PROF) recorded the absolute minimum temperature?",
+    "output": "SELECT N_PROF FROM argo_float_data ORDER BY TEMP ASC LIMIT 1;"
+  },
+  {
+    "input": "What are the temperature readings from buoy AD10 that were taken at 107.0376 longitude?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND longitude = 107.0376;"
+  },
+  {
+    "input": "Retrieve the highest salinity value recorded at each distinct pressure level from buoy CB02.",
+    "output": "SELECT PRES, MAX(PSAL) FROM argo_float_data WHERE N_PROF = 1 GROUP BY PRES;"
+  },
+  {
+    "input": "How many readings from buoy AD10 have temperature values above the overall average temperature?",
+    "output": "SELECT COUNT(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > (SELECT AVG(TEMP) FROM argo_float_data);"
+  },
+  {
+    "input": "What is the median pressure from buoy CB02? (Assume approximate median for simplicity if no direct function)",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1) / 2;"
+  },
+  {
+    "input": "List the temperature, salinity, and pressure values for buoy AD10 where the N_LEVELS is 10.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 10;"
+  },
+  {
+    "input": "Find the latest timestamp for which data was recorded from buoy AD10.",
+    "output": "SELECT MAX(time) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the average temperature from buoy CB02 for each distinct longitude point.",
+    "output": "SELECT longitude, AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 GROUP BY longitude;"
+  },
+  {
+    "input": "Retrieve the first 10 data entries for buoy AD10, ordered by time.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 ORDER BY time ASC LIMIT 10;"
+  },
+  {
+    "input": "What is the average temperature at the shallowest point for all buoys?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE PRES = (SELECT MIN(PRES) FROM argo_float_data);"
+  },
+  {
+    "input": "List all salinity readings from buoy AD10 that are below 34.0 PSU and at a depth less than 100m.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PSAL < 34.0 AND PRES < 100.0;"
+  },
+  {
+    "input": "For buoy CB02, what's the difference between maximum and minimum pressure?",
+    "output": "SELECT MAX(PRES) - MIN(PRES) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "How many readings from buoy AD10 had a temperature value greater than 28.9 degrees?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9;"
+  },
+  {
+    "input": "Show the temperature at 15m depth for buoy CB02.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND PRES = 15.3;"
+  },
+  {
+    "input": "What's the overall average depth (pressure) recorded from all buoys?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve all data for buoy AD10 where the temperature is exactly 28.937 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP = 28.937;"
+  },
+  {
+    "input": "List distinct latitudes where measurements were taken by buoy CB02.",
+    "output": "SELECT DISTINCT latitude FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Find the maximum temperature and its corresponding pressure for buoy AD10, specifically between levels 100 and 200.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS BETWEEN 100 AND 200 ORDER BY TEMP DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the average salinity for buoy AD10 for each unique latitude point.",
+    "output": "SELECT latitude, AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 GROUP BY latitude;"
+  },
+  {
+    "input": "What is the median temperature for buoy AD10? (approximate median)",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0) / 2;"
+  },
+  {
+    "input": "Count the number of readings from buoy CB02 that occurred on January 31, 2025.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND DATE(time) = '2025-01-31';"
+  },
+  {
+    "input": "Retrieve temperature, salinity, and pressure values for buoy AD10 at levels higher than 500 (N_LEVELS > 500).",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS > 500;"
+  },
+  {
+    "input": "What's the maximum pressure recorded on January 31, 2025, from any buoy?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE DATE(time) = '2025-01-31';"
+  },
+  {
+    "input": "List all data for buoy CB02 where the time is before '2025-01-31 23:51:00'.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND time < '2025-01-31 23:51:00';"
+  },
+  {
+    "input": "Find the lowest temperature at a pressure of 1000 dbar from buoy AD10.",
+    "output": "SELECT MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 1000.0;"
+  },
+  {
+    "input": "Show the average temperature from buoy CB02 for readings within 1 degree longitude of 78.0.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND longitude BETWEEN 77.0 AND 79.0;"
+  },
+  {
+    "input": "Retrieve all readings from buoy AD10 where the salinity is below the average salinity of all buoys.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PSAL < (SELECT AVG(PSAL) FROM argo_float_data);"
+  },
+  {
+    "input": "What are the temperatures from buoy CB02 that are higher than 28 degrees, sorted in descending order?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.0 ORDER BY TEMP DESC;"
+  },
+  {
+    "input": "Count the number of data points where the pressure is exactly 50.0 dbar for all buoys.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE PRES = 50.0;"
+  },
+  {
+    "input": "Show the latest observed pressure and salinity from buoy AD10 in the given dataset.",
+    "output": "SELECT PRES, PSAL FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the earliest timestamp for any measurement from buoy CB02.",
+    "output": "SELECT MIN(time) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "What is the average of the `N_LEVELS` column for buoy AD10?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "List distinct combinations of temperature and salinity values from buoy AD10.",
+    "output": "SELECT DISTINCT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve all data for buoy CB02 where the temperature is greater than 28.7 degrees and salinity is less than 34.8.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.7 AND PSAL < 34.8;"
+  },
+  {
+    "input": "What is the pressure at the minimum temperature for buoy AD10?",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP ASC LIMIT 1;"
+  },
+  {
+    "input": "Show the sum of all pressure readings for buoy AD10.",
+    "output": "SELECT SUM(PRES) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "How many readings from buoy CB02 have a pressure between 3.0 and 5.0 dbar?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 3.0 AND 5.0;"
+  },
+  {
+    "input": "What are the longitudes where temperature readings from buoy AD10 were exactly 28.939 degrees?",
+    "output": "SELECT longitude FROM argo_float_data WHERE N_PROF = 0 AND TEMP = 28.939;"
+  },
+  {
+    "input": "Find the N_PROF with the highest average temperature.",
+    "output": "SELECT N_PROF FROM argo_float_data GROUP BY N_PROF ORDER BY AVG(TEMP) DESC LIMIT 1;"
+  },
+  {
+    "input": "List the full data row for any reading from buoy AD10 where the pressure is exactly 1965.1 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES = 1965.1;"
+  },
+  {
+    "input": "For buoy CB02, what's the average `N_LEVELS` for observations with pressure less than 10 dbar?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND PRES < 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure values from buoy AD10 for readings taken at odd `N_LEVELS`.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 1;"
+  },
+  {
+    "input": "What is the count of distinct longitude values across all buoys?",
+    "output": "SELECT COUNT(DISTINCT longitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Show the average salinity from buoy AD10 for all data recorded on January 31, 2025, after 23:00.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND time >= '2025-01-31 23:00:00' AND time <= '2025-01-31 23:59:59';"
+  },
+  {
+    "input": "Find the latitude and longitude where the minimum temperature was recorded by buoy AD10.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP ASC LIMIT 1;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where the temperature is exactly 28.758.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP = 28.758;"
+  },
+  {
+    "input": "What is the maximum pressure recorded for each individual `N_PROF` (buoy)?",
+    "output": "SELECT N_PROF, MAX(PRES) FROM argo_float_data GROUP BY N_PROF;"
+  },
+  {
+    "input": "How many data points from buoy AD10 have a salinity value different from 33.875?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PSAL != 33.875;"
+  },
+  {
+    "input": "Show the average pressure from buoy CB02 for all readings where temperature is below 28 degrees.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure values for buoy AD10 for the highest N_LEVELS.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY N_LEVELS DESC LIMIT 1;"
+  },
+  {
+    "input": "What are the temperature readings from buoy CB02 at pressures above 10.0 dbar, and at a longitude of 77.99821166666666?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND PRES > 10.0 AND longitude = 77.99821166666666;"
+  },
+  {
+    "input": "Find the earliest time when salinity from buoy AD10 was above 34.5 PSU.",
+    "output": "SELECT MIN(time) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.5;"
+  },
+  {
+    "input": "List the count of readings for each N_PROF where temperature is less than 10 degrees.",
+    "output": "SELECT N_PROF, COUNT(*) FROM argo_float_data WHERE TEMP < 10.0 GROUP BY N_PROF;"
+  },
+  {
+    "input": "What is the maximum salinity for buoy AD10 between pressure levels 100 and 200?",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 100.0 AND 200.0;"
+  },
+  {
+    "input": "Show the average pressure for buoy CB02 at each distinct N_LEVELS.",
+    "output": "SELECT N_LEVELS, AVG(PRES) FROM argo_float_data WHERE N_PROF = 1 GROUP BY N_LEVELS;"
+  },
+  {
+    "input": "Retrieve all rows from buoy AD10 where the temperature is lower than 28.935.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 28.935;"
+  },
+  {
+    "input": "What is the total number of distinct `N_PROF` values in the dataset?",
+    "output": "SELECT COUNT(DISTINCT N_PROF) FROM argo_float_data;"
+  },
+  {
+    "input": "Find the latest recorded salinity from buoy AD10 at a depth less than 100 meters.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES < 100.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "List the temperature, salinity, and pressure for buoy CB02 at its deepest point.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the average temperature from buoy AD10 for readings with an even N_LEVELS.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 0;"
+  },
+  {
+    "input": "How many readings from buoy CB02 have a temperature less than 28.0 degrees?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0;"
+  },
+  {
+    "input": "What are the minimum and maximum latitudes recorded by buoy AD10?",
+    "output": "SELECT MIN(latitude), MAX(latitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve all temperature and salinity measurements from buoy AD10 where the pressure is exactly 20.0 dbar.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES = 20.0;"
+  },
+  {
+    "input": "List the pressure values from buoy CB02 for all data where salinity is above 34.5 and temperature is below 27.0.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 1 AND PSAL > 34.5 AND TEMP < 27.0;"
+  },
+  {
+    "input": "Find the average salinity (PSAL) for all measurements taken on January 31, 2025, from 23:50:00 to 23:59:00.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE time BETWEEN '2025-01-31 23:50:00' AND '2025-01-31 23:59:00';"
+  },
+  {
+    "input": "Show the range of salinity values for buoy AD10 (max-min).",
+    "output": "SELECT MAX(PSAL) - MIN(PSAL) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "What's the deepest pressure reading where the temperature was above 20 degrees for buoy CB02?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 20.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure data from buoy AD10 for the latest 5 readings.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 5;"
+  },
+  {
+    "input": "List the distinct N_PROF values present in the data.",
+    "output": "SELECT DISTINCT N_PROF FROM argo_float_data;"
+  },
+  {
+    "input": "What is the average latitude for buoy AD10?",
+    "output": "SELECT AVG(latitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Find the date of the first recorded measurement from any buoy.",
+    "output": "SELECT MIN(DATE(time)) FROM argo_float_data;"
+  },
+  {
+    "input": "Show the pressure values for buoy AD10 where the temperature is greater than 28.9 degrees and less than 29.0 degrees.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9 AND TEMP < 29.0;"
+  },
+  {
+    "input": "How many salinity readings from buoy AD10 are exactly 33.875 and pressure is 10.0?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PSAL = 33.875 AND PRES = 10.0;"
+  },
+  {
+    "input": "What is the maximum temperature across all buoys at pressure 4.2 dbar?",
+    "output": "SELECT MAX(TEMP) FROM argo_float_data WHERE PRES = 4.2;"
+  },
+  {
+    "input": "Retrieve the average pressure for each `N_PROF` (buoy).",
+    "output": "SELECT N_PROF, AVG(PRES) FROM argo_float_data GROUP BY N_PROF;"
+  },
+  {
+    "input": "List the temperatures from buoy CB02 that are below 15 degrees Celsius.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 15.0;"
+  },
+  {
+    "input": "Find the latitude and longitude associated with the overall minimum salinity reading for buoy CB02.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY PSAL ASC LIMIT 1;"
+  },
+  {
+    "input": "Show the earliest recorded pressure from buoy AD10.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "What are the temperature values from buoy AD10 at pressures greater than 1500 dbar?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1500.0;"
+  },
+  {
+    "input": "How many measurements from buoy CB02 have a latitude of -0.6992616666666667?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND latitude = -0.6992616666666667;"
+  },
+  {
+    "input": "Retrieve all readings from buoy AD10 where temperature is less than the average temperature of buoy CB02.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP < (SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1);"
+  },
+  {
+    "input": "List the pressure and time of all salinity readings from buoy AD10 that are exactly 34.69.",
+    "output": "SELECT PRES, time FROM argo_float_data WHERE N_PROF = 0 AND PSAL = 34.69;"
+  },
+  {
+    "input": "What is the most frequent temperature value recorded by buoy AD10?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 GROUP BY TEMP ORDER BY COUNT(*) DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the average temperature, salinity, and pressure at `N_LEVELS` = 5 for buoy AD10.",
+    "output": "SELECT AVG(TEMP), AVG(PSAL), AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 5;"
+  },
+  {
+    "input": "Find the total number of data points for buoy CB02.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the first recorded temperature and salinity from buoy AD10.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "List the temperature, salinity, and pressure readings from buoy AD10 where the time is exactly '2025-01-31 23:56:21'.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND time = '2025-01-31 23:56:21';"
+  },
+  {
+    "input": "What's the maximum latitude recorded by buoy CB02?",
+    "output": "SELECT MAX(latitude) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the count of readings for each distinct temperature value from buoy AD10.",
+    "output": "SELECT TEMP, COUNT(*) FROM argo_float_data WHERE N_PROF = 0 GROUP BY TEMP;"
+  },
+  {
+    "input": "Find the average temperature at each meter of depth (pressure) for buoy AD10, rounded to one decimal place.",
+    "output": "SELECT ROUND(PRES, 0) AS Depth, AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 GROUP BY Depth ORDER BY Depth;"
+  },
+  {
+    "input": "Retrieve all data for buoy CB02 where the `N_LEVELS` is 0.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "List the distinct longitudes where measurements were taken for buoy AD10.",
+    "output": "SELECT DISTINCT longitude FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "What is the minimum salinity (PSAL) recorded by buoy CB02 for temperatures above 28 degrees?",
+    "output": "SELECT MIN(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.0;"
+  },
+  {
+    "input": "Show the temperature and pressure from buoy AD10 for readings taken from 8 am yesterday (Jan 30, 2025) to 8 am today (Jan 31, 2025).",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-30 08:00:00' AND '2025-01-31 08:00:00';"
+  },
+  {
+    "input": "How many unique latitude values are present in the entire dataset?",
+    "output": "SELECT COUNT(DISTINCT latitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Find the average temperature at pressures between 1000 and 1500 dbar for buoy AD10.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 1000.0 AND 1500.0;"
+  },
+  {
+    "input": "List the top 3 highest pressure readings and their corresponding temperatures from buoy CB02.",
+    "output": "SELECT PRES, TEMP FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES DESC LIMIT 3;"
+  },
+  {
+    "input": "What is the average salinity for buoy AD10 across all measurements?",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve all data for buoy AD10 where the pressure is exactly 4.2 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES = 4.2;"
+  },
+  {
+    "input": "Show the count of readings for each distinct salinity value from buoy CB02.",
+    "output": "SELECT PSAL, COUNT(*) FROM argo_float_data WHERE N_PROF = 1 GROUP BY PSAL;"
+  },
+  {
+    "input": "Find the buoy (N_PROF) with the lowest average salinity.",
+    "output": "SELECT N_PROF FROM argo_float_data GROUP BY N_PROF ORDER BY AVG(PSAL) ASC LIMIT 1;"
+  },
+  {
+    "input": "List the temperature, salinity, and pressure from buoy CB02 where the `N_LEVELS` is 1.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 1;"
+  },
+  {
+    "input": "What is the maximum longitude recorded by buoy AD10?",
+    "output": "SELECT MAX(longitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the overall average `N_LEVELS` across all buoys.",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data;"
+  },
+  {
+    "input": "How many readings from buoy AD10 have a pressure greater than 1900 dbar?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1900.0;"
+  },
+  {
+    "input": "Retrieve the temperature at 10m depth from buoy AD10 in the last 24 hours (relative to the latest timestamp in the data).",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES = 10.0 AND time >= DATETIME('2025-01-31 23:56:21', '-24 hours');"
+  },
+  {
+    "input": "List the pressure and salinity from buoy CB02 for readings taken in the first 10 minutes of January 31, 2025.",
+    "output": "SELECT PRES, PSAL FROM argo_float_data WHERE N_PROF = 1 AND time BETWEEN '2025-01-31 00:00:00' AND '2025-01-31 00:10:00';"
+  },
+  {
+    "input": "Find the latitude and longitude of the shallowest temperature measurement for buoy AD10.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES ASC LIMIT 1;"
+  },
+  {
+    "input": "What is the median salinity for buoy CB02? (approximate median)",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 1 ORDER BY PSAL LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1) / 2;"
+  },
+  {
+    "input": "Show all temperature readings from buoy AD10 where the `N_LEVELS` is between 0 and 5.",
+    "output": "SELECT TEMP, N_LEVELS FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS BETWEEN 0 AND 5;"
+  },
+  {
+    "input": "Retrieve the time and pressure for all readings from buoy CB02 where salinity is exactly 34.781.",
+    "output": "SELECT time, PRES FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.781;"
+  },
+  {
+    "input": "What is the minimum pressure value from buoy AD10 where temperature is above 28.9 degrees?",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9;"
+  },
+  {
+    "input": "List the top 10 highest temperature readings from buoy AD10 along with their pressure.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP DESC LIMIT 10;"
+  },
+  {
+    "input": "Find the average temperature for buoy AD10 for readings with a longitude around 107.03.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND longitude BETWEEN 107.03 - 0.01 AND 107.03 + 0.01;"
+  },
+  {
+    "input": "How many measurements are available for buoy AD10?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the most recent pressure and temperature readings from buoy CB02.",
+    "output": "SELECT PRES, TEMP FROM argo_float_data WHERE N_PROF = 1 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "What is the overall average `N_LEVELS` for buoy CB02?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve all data from buoy AD10 where `N_LEVELS` is 15.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 15;"
+  },
+  {
+    "input": "List distinct `N_LEVELS` values that have a temperature greater than 20 degrees from buoy AD10.",
+    "output": "SELECT DISTINCT N_LEVELS FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 20.0;"
+  },
+  {
+    "input": "Find the minimum longitude for buoy CB02.",
+    "output": "SELECT MIN(longitude) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the average salinity and temperature for buoy AD10 at each `N_LEVELS`.",
+    "output": "SELECT N_LEVELS, AVG(PSAL), AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 GROUP BY N_LEVELS ORDER BY N_LEVELS;"
+  },
+  {
+    "input": "What is the count of readings for buoy CB02 where salinity is exactly 34.78?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure where the `N_PROF` is 0 and `N_LEVELS` is 0.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "List all readings from buoy AD10 taken in the past 3 days relative to the latest data point.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND time >= DATETIME('2025-01-31 23:56:21', '-3 days');"
+  },
+  {
+    "input": "Find the lowest pressure (shallowest) for buoy AD10 with a salinity higher than 34.5 PSU.",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.5;"
+  },
+  {
+    "input": "Show the average temperature for buoy CB02 from readings at a depth of 5.9 dbar.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND PRES = 5.9;"
+  },
+  {
+    "input": "What is the maximum observed `N_LEVELS` for buoy AD10?",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve the time and corresponding temperature for all readings from buoy AD10 with a salinity of 33.875.",
+    "output": "SELECT time, TEMP FROM argo_float_data WHERE N_PROF = 0 AND PSAL = 33.875;"
+  },
+  {
+    "input": "List all data points from buoy CB02 where pressure is greater than 15.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 15.0;"
+  },
+  {
+    "input": "Find the average temperature at 10m depth across all buoys.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE PRES = 10.0;"
+  },
+  {
+    "input": "Show the temperature, salinity, and pressure for buoy AD10 for readings taken after 23:50:00 on January 31, 2025.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND time > '2025-01-31 23:50:00';"
+  },
+  {
+    "input": "What is the overall average salinity across all buoys in the dataset?",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve the minimum and maximum `N_LEVELS` for buoy CB02.",
+    "output": "SELECT MIN(N_LEVELS), MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "List all temperature readings from buoy AD10 where the latitude is exactly -8.2858 and the longitude is 107.0376.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND latitude = -8.2858 AND longitude = 107.0376;"
+  },
+  {
+    "input": "Find the count of readings from buoy CB02 with a temperature below 28.7 degrees.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7;"
+  },
+  {
+    "input": "Show the average pressure for buoy AD10 at a depth range of 500-1000 dbar.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 500.0 AND 1000.0;"
+  },
+  {
+    "input": "What is the most common `N_LEVELS` value for buoy AD10?",
+    "output": "SELECT N_LEVELS FROM argo_float_data WHERE N_PROF = 0 GROUP BY N_LEVELS ORDER BY COUNT(*) DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the latitude and longitude for the highest pressure reading recorded by buoy AD10.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "List the salinity and temperature readings from buoy CB02 where `N_LEVELS` is 5.",
+    "output": "SELECT PSAL, TEMP FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 5;"
+  },
+  {
+    "input": "Find the latest measurement from buoy AD10 with a temperature greater than 10 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 10.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the sum of all temperature values for buoy CB02.",
+    "output": "SELECT SUM(TEMP) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "What is the minimum recorded `N_LEVELS` for buoy AD10?",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "How many entries from buoy AD10 have a pressure reading of 50.0 dbar and salinity of 33.876?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 50.0 AND PSAL = 33.876;"
+  },
+  {
+    "input": "Retrieve all rows from buoy CB02 where the time is exactly '2025-01-31 23:51:30'.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND time = '2025-01-31 23:51:30';"
+  },
+  {
+    "input": "List the temperature values from buoy AD10, ordered by `N_LEVELS` descending.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 ORDER BY N_LEVELS DESC;"
+  },
+  {
+    "input": "Find the average temperature for buoy AD10 at pressures above 1000 dbar.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0;"
+  },
+  {
+    "input": "Show the number of readings for each distinct `N_PROF` that have temperature below 15 degrees.",
+    "output": "SELECT N_PROF, COUNT(*) FROM argo_float_data WHERE TEMP < 15.0 GROUP BY N_PROF;"
+  },
+  {
+    "input": "What is the average salinity for all data points at `N_LEVELS` = 0?",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_LEVELS = 0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy CB02 at the earliest recorded time.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where temperature is above 28.9 degrees and pressure is below 50 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9 AND PRES < 50.0;"
+  },
+  {
+    "input": "Find the maximum salinity value recorded for each `N_PROF` (buoy).",
+    "output": "SELECT N_PROF, MAX(PSAL) FROM argo_float_data GROUP BY N_PROF;"
+  },
+  {
+    "input": "Show the first 5 entries from buoy AD10 that have a pressure greater than 100 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES > 100.0 ORDER BY time ASC LIMIT 5;"
+  },
+  {
+    "input": "What is the average temperature for buoy AD10 taken in the morning (before 12 PM) on January 31, 2025?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND DATE(time) = '2025-01-31' AND STRFTIME('%H', time) < '12';"
+  },
+  {
+    "input": "Retrieve the temperature and pressure for buoy CB02 when salinity was exactly 34.785.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.785;"
+  },
+  {
+    "input": "List the unique `N_LEVELS` that were sampled by buoy AD10.",
+    "output": "SELECT DISTINCT N_LEVELS FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "What is the latitude and longitude of buoy CB02 when its temperature was at its lowest?",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY TEMP ASC LIMIT 1;"
+  },
+  {
+    "input": "Show the count of unique pressure readings for buoy AD10.",
+    "output": "SELECT COUNT(DISTINCT PRES) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Find the latest recorded pressure by buoy CB02 at a temperature above 28.7 degrees.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.7 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve all readings from buoy AD10 where salinity is greater than 34.8 and pressure is less than 500 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.8 AND PRES < 500.0;"
+  },
+  {
+    "input": "List the average temperature for each `N_PROF`.",
+    "output": "SELECT N_PROF, AVG(TEMP) FROM argo_float_data GROUP BY N_PROF;"
+  },
+  {
+    "input": "What is the maximum pressure at N_LEVELS 10 for buoy AD10?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 10;"
+  },
+  {
+    "input": "Show all temperature readings from buoy AD10 for pressures between 200 and 300 dbar, inclusive.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 200.0 AND 300.0;"
+  },
+  {
+    "input": "Find the count of readings from buoy CB02 where the `N_LEVELS` is less than 10.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS < 10;"
+  },
+  {
+    "input": "Retrieve the maximum temperature recorded for buoy AD10 at a depth of 70 dbar.",
+    "output": "SELECT MAX(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 70.0;"
+  },
+  {
+    "input": "List the full data row for the overall maximum pressure reading.",
+    "output": "SELECT * FROM argo_float_data ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "What is the average longitude for buoy CB02?",
+    "output": "SELECT AVG(longitude) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the temperature, salinity, and pressure from buoy AD10 for every 10th `N_LEVELS` starting from 0.",
+    "output": "SELECT TEMP, PSAL, PRES, N_LEVELS FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 10 = 0;"
+  },
+  {
+    "input": "Find the `N_PROF` and `time` of the single highest temperature measurement.",
+    "output": "SELECT N_PROF, time FROM argo_float_data ORDER BY TEMP DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve all readings from buoy AD10 where the time is exactly '2025-01-31 23:56:21' and temperature is 28.935.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND time = '2025-01-31 23:56:21' AND TEMP = 28.935;"
+  },
+  {
+    "input": "List the average temperature for buoy CB02 from readings taken from 00:00 to 01:00 on January 31, 2025.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND time BETWEEN '2025-01-31 00:00:00' AND '2025-01-31 01:00:00';"
+  },
+  {
+    "input": "What is the minimum temperature for buoy AD10 at depths greater than 1000 dbar?",
+    "output": "SELECT MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0;"
+  },
+  {
+    "input": "Show the count of readings for each unique `N_LEVELS` for buoy AD10.",
+    "output": "SELECT N_LEVELS, COUNT(*) FROM argo_float_data WHERE N_PROF = 0 GROUP BY N_LEVELS ORDER BY N_LEVELS;"
+  },
+  {
+    "input": "Find the highest salinity for buoy AD10 recorded at a pressure of 10.0 dbar.",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure for buoy CB02, ordered by time ascending.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 ORDER BY time ASC;"
+  },
+  {
+    "input": "List all measurements from buoy AD10 where the `N_LEVELS` column is between 50 and 60.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS BETWEEN 50 AND 60;"
+  },
+  {
+    "input": "What is the earliest recorded pressure from buoy CB02 with a salinity less than 34.8?",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 1 AND PSAL < 34.8 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Show the highest `N_LEVELS` reached by buoy CB02.",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Find the number of data points for buoy AD10 with a temperature greater than 28.935.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.935;"
+  },
+  {
+    "input": "Retrieve the time, latitude, and longitude for the deepest reading from buoy AD10.",
+    "output": "SELECT time, latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where the `PRES` is exactly 3.9 dbar and the `PSAL` is 34.779.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES = 3.9 AND PSAL = 34.779;"
+  },
+  {
+    "input": "What is the overall average `N_LEVELS` for all buoys where the temperature is above 20 degrees?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE TEMP > 20.0;"
+  },
+  {
+    "input": "Show the lowest salinity recorded at `N_LEVELS` 2 from buoy AD10.",
+    "output": "SELECT MIN(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 2;"
+  },
+  {
+    "input": "Find the difference between the maximum and minimum salinity for buoy CB02.",
+    "output": "SELECT MAX(PSAL) - MIN(PSAL) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the temperature and salinity at the overall shallowest pressure recorded.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data ORDER BY PRES ASC LIMIT 1;"
+  },
+  {
+    "input": "List all data for buoy AD10 with temperature values between 28.9 and 29.0 degrees, ordered by time.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP BETWEEN 28.9 AND 29.0 ORDER BY time;"
+  },
+  {
+    "input": "What is the average temperature at each longitude for buoy AD10?",
+    "output": "SELECT longitude, AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 GROUP BY longitude;"
+  },
+  {
+    "input": "Show the count of temperature readings from buoy CB02 that are less than 28.75 degrees.",
+    "output": "SELECT COUNT(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.75;"
+  },
+  {
+    "input": "Find the maximum latitude recorded by any buoy in the dataset.",
+    "output": "SELECT MAX(latitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 at N_LEVELS 25.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 25;"
+  },
+  {
+    "input": "List the full data row for the second highest temperature recorded by buoy AD10.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP DESC LIMIT 1 OFFSET 1;"
+  },
+  {
+    "input": "What is the average pressure at 100 dbar depth for buoy AD10?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 100.0;"
+  },
+  {
+    "input": "Show the median temperature for all buoys combined (approximate median).",
+    "output": "SELECT TEMP FROM argo_float_data ORDER BY TEMP LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data) / 2;"
+  },
+  {
+    "input": "Find the number of entries for buoy CB02 where the `N_LEVELS` is 13.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 13;"
+  },
+  {
+    "input": "Retrieve the temperatures from buoy AD10 where the pressure is exactly 500 dbar.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES = 500.0;"
+  },
+  {
+    "input": "List the distinct `N_PROF` values that have recorded a pressure greater than 1000 dbar.",
+    "output": "SELECT DISTINCT N_PROF FROM argo_float_data WHERE PRES > 1000.0;"
+  },
+  {
+    "input": "What is the earliest recorded temperature from buoy AD10 at a depth less than 50 meters?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES < 50.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Show the maximum longitude for buoy CB02.",
+    "output": "SELECT MAX(longitude) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Find the number of readings from buoy AD10 where salinity is greater than the average salinity of buoy CB02.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > (SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 1);"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure for buoy AD10 at a `N_LEVELS` of 100.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 100;"
+  },
+  {
+    "input": "List all rows from buoy CB02 for readings taken in the entire month of January 2025.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND time BETWEEN '2025-01-01 00:00:00' AND '2025-01-31 23:59:59';"
+  },
+  {
+    "input": "What is the average temperature from buoy AD10 at pressures between 0 and 100 dbar?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 0.0 AND 100.0;"
+  },
+  {
+    "input": "Show the latest temperature from buoy CB02 for readings with a pressure greater than 10 dbar.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 AND PRES > 10.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_LEVELS` for buoy CB02 that have a salinity greater than 34.7.",
+    "output": "SELECT COUNT(DISTINCT N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND PSAL > 34.7;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for readings with an odd `N_LEVELS` and pressure greater than 100 dbar.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 1 AND PRES > 100.0;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where temperature is less than 28 degrees and salinity is greater than 34.0 PSU.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 28.0 AND PSAL > 34.0;"
+  },
+  {
+    "input": "What is the second lowest temperature recorded by buoy AD10?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP ASC LIMIT 1 OFFSET 1;"
+  },
+  {
+    "input": "Show the earliest recorded temperature and pressure from any buoy at `N_LEVELS` 0.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_LEVELS = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the average temperature for buoy CB02 for each distinct `N_LEVELS`.",
+    "output": "SELECT N_LEVELS, AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 GROUP BY N_LEVELS ORDER BY N_LEVELS;"
+  },
+  {
+    "input": "Retrieve the latitude and longitude for buoy CB02 when the salinity was 34.78.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78;"
+  },
+  {
+    "input": "List the data for buoy AD10 where the `PRES` is exactly 6.0 and the `TEMP` is 28.937.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES = 6.0 AND TEMP = 28.937;"
+  },
+  {
+    "input": "What is the average pressure across all buoys for readings where temperature is below 10 degrees?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE TEMP < 10.0;"
+  },
+  {
+    "input": "Show the maximum salinity from buoy AD10 for readings taken from 2025-01-31 23:00:00 onwards.",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND time >= '2025-01-31 23:00:00';"
+  },
+  {
+    "input": "Find the latest recorded latitude and longitude for buoy AD10.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for the 10th reading (N_LEVELS = 9).",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 9;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where pressure is exactly 19.9 dbar and temperature is 28.671.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES = 19.9 AND TEMP = 28.671;"
+  },
+  {
+    "input": "What is the minimum overall `N_LEVELS` recorded across all buoys?",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data;"
+  },
+  {
+    "input": "Show the count of readings from buoy AD10 with a temperature between 28.935 and 28.939.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND TEMP BETWEEN 28.935 AND 28.939;"
+  },
+  {
+    "input": "Find the average latitude and longitude for buoy AD10 for all its measurements.",
+    "output": "SELECT AVG(latitude), AVG(longitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve the distinct longitudes recorded by buoy CB02.",
+    "output": "SELECT DISTINCT longitude FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "List the temperature values from buoy AD10 with pressure between 400 and 500 dbar.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 400.0 AND 500.0;"
+  },
+  {
+    "input": "What is the maximum salinity at 500 dbar for buoy AD10?",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 500.0;"
+  },
+  {
+    "input": "Show the average pressure from buoy AD10 for readings with an N_LEVELS between 20 and 30.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS BETWEEN 20 AND 30;"
+  },
+  {
+    "input": "Find the timestamp and temperature for the first reading of buoy CB02 at 3.1 dbar.",
+    "output": "SELECT time, TEMP FROM argo_float_data WHERE N_PROF = 1 AND PRES = 3.1 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve all data for buoy AD10, sorted by salinity ascending.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 ORDER BY PSAL ASC;"
+  },
+  {
+    "input": "List the average temperature from buoy CB02 for measurements taken at a longitude of 77.99821166666666.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND longitude = 77.99821166666666;"
+  },
+  {
+    "input": "What are the temperature, salinity, and pressure values from buoy AD10 where the time is equal to '2025-01-31 23:56:21' and N_LEVELS is 50?",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND time = '2025-01-31 23:56:21' AND N_LEVELS = 50;"
+  },
+  {
+    "input": "Show the count of readings for buoy CB02 at each distinct `PRES` value where temperature is above 28 degrees.",
+    "output": "SELECT PRES, COUNT(*) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.0 GROUP BY PRES;"
+  },
+  {
+    "input": "Find the latitude and longitude for buoy AD10 when salinity was at its lowest.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY PSAL ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature and pressure from buoy AD10 for the measurement with `N_LEVELS` 200.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 200;"
+  },
+  {
+    "input": "List the top 5 distinct temperature values recorded by buoy AD10.",
+    "output": "SELECT DISTINCT TEMP FROM argo_float_data WHERE N_PROF = 0 ORDER BY TEMP DESC LIMIT 5;"
+  },
+  {
+    "input": "What is the average pressure from buoy CB02 for readings taken in the entire day of January 31, 2025?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 1 AND DATE(time) = '2025-01-31';"
+  },
+  {
+    "input": "Show all data for buoy AD10 where the time is exactly '2025-01-31 23:56:21' and `N_LEVELS` is 150.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND time = '2025-01-31 23:56:21' AND N_LEVELS = 150;"
+  },
+  {
+    "input": "Find the earliest timestamp for buoy AD10 with a pressure above 1000 dbar.",
+    "output": "SELECT MIN(time) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy CB02 for `N_LEVELS` 16.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 16;"
+  },
+  {
+    "input": "List the count of readings for buoy AD10 where `PRES` is above 1000 dbar and `TEMP` is below 10 degrees.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0 AND TEMP < 10.0;"
+  },
+  {
+    "input": "What is the lowest temperature recorded at `N_LEVELS` 10 for buoy AD10?",
+    "output": "SELECT MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 10;"
+  },
+  {
+    "input": "Show the average salinity for buoy CB02 for readings with a temperature above 28.7 degrees.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.7;"
+  },
+  {
+    "input": "Find the mean `N_LEVELS` for buoy AD10.",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 250.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 250;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where the `PSAL` is exactly 34.78 and the `TEMP` is 28.758.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78 AND TEMP = 28.758;"
+  },
+  {
+    "input": "What is the maximum longitude recorded for buoy AD10 at any time?",
+    "output": "SELECT MAX(longitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the average temperature for buoy AD10 for readings with `N_LEVELS` above 200.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS > 200;"
+  },
+  {
+    "input": "Find the most recent temperature reading for buoy AD10.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure for buoy CB02 for `N_LEVELS` 10.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 10;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where temperature is below 5 degrees and pressure is above 1500 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 5.0 AND PRES > 1500.0;"
+  },
+  {
+    "input": "What is the average pressure from buoy CB02 for `N_LEVELS` 7?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 7;"
+  },
+  {
+    "input": "Show the total count of readings for each buoy where the `latitude` is negative.",
+    "output": "SELECT N_PROF, COUNT(*) FROM argo_float_data WHERE latitude < 0 GROUP BY N_PROF;"
+  },
+  {
+    "input": "Find the earliest salinity reading from buoy AD10 at a depth between 10 and 20 meters.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 10.0 AND 20.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 at `N_LEVELS` 300.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 300;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is between 10.0 and 15.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 10.0 AND 15.0;"
+  },
+  {
+    "input": "What is the maximum temperature from buoy AD10 at the surface (lowest pressure)?",
+    "output": "SELECT MAX(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES = (SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0);"
+  },
+  {
+    "input": "Show the minimum `N_LEVELS` recorded for buoy CB02 with a temperature above 28 degrees.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.0;"
+  },
+  {
+    "input": "Find the average temperature for buoy AD10 for readings taken from 2025-01-31 23:50:00 to 2025-01-31 23:56:00.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-31 23:50:00' AND '2025-01-31 23:56:00';"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 400.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 400;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where the `latitude` is exactly -0.6992616666666667 and `longitude` is 77.99821166666666.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND latitude = -0.6992616666666667 AND longitude = 77.99821166666666;"
+  },
+  {
+    "input": "What is the range of `N_LEVELS` for buoy AD10 (max-min)?",
+    "output": "SELECT MAX(N_LEVELS) - MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the latest temperature and salinity for buoy AD10 at a depth between 100 and 200 dbar.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 100.0 AND 200.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_PROF` values that have recorded a temperature above 25 degrees.",
+    "output": "SELECT COUNT(DISTINCT N_PROF) FROM argo_float_data WHERE TEMP > 25.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 500.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 500;"
+  },
+  {
+    "input": "List the full data row for the overall minimum temperature reading across all buoys.",
+    "output": "SELECT * FROM argo_float_data ORDER BY TEMP ASC LIMIT 1;"
+  },
+  {
+    "input": "What is the average pressure for buoy CB02 at its deepest measured point?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the earliest recorded salinity from buoy AD10.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the number of readings from buoy AD10 where the latitude is exactly -8.2858 and the pressure is less than 100 dbar.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND latitude = -8.2858 AND PRES < 100.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy CB02 for `N_LEVELS` 0.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where `TEMP` is between 5 and 10 degrees and `PRES` is above 1000 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND TEMP BETWEEN 5.0 AND 10.0 AND PRES > 1000.0;"
+  },
+  {
+    "input": "What is the average `N_LEVELS` for all readings from buoy AD10 where salinity is greater than 34.8?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.8;"
+  },
+  {
+    "input": "Show the latest latitude and longitude for buoy CB02.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the mean temperature for buoy CB02 across all data points.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 600.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 600;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is between 28.7 and 28.8 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP BETWEEN 28.7 AND 28.8;"
+  },
+  {
+    "input": "What is the minimum pressure recorded by buoy AD10 with a salinity less than 34.0?",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PSAL < 34.0;"
+  },
+  {
+    "input": "Show the count of unique latitude values for buoy AD10.",
+    "output": "SELECT COUNT(DISTINCT latitude) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Find the overall earliest timestamp in the entire dataset.",
+    "output": "SELECT MIN(time) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 700.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 700;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is less than 5.0 dbar and `TEMP` is above 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES < 5.0 AND TEMP > 28.7;"
+  },
+  {
+    "input": "What is the mean salinity for buoy AD10 for readings taken after 12:00 PM on January 31, 2025?",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND DATE(time) = '2025-01-31' AND STRFTIME('%H', time) >= '12';"
+  },
+  {
+    "input": "Show the temperature and pressure from buoy AD10 for every 50th `N_LEVELS` starting from 0.",
+    "output": "SELECT TEMP, PRES, N_LEVELS FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 50 = 0;"
+  },
+  {
+    "input": "Find the maximum `N_LEVELS` for buoy AD10 where temperature is above 28 degrees.",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 800.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 800;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is exactly 34.782.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.782;"
+  },
+  {
+    "input": "What is the average temperature for buoy AD10 at pressures between 1000 and 1200 dbar?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 1000.0 AND 1200.0;"
+  },
+  {
+    "input": "Show the earliest recorded temperature from buoy CB02 at the lowest pressure.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES ASC, time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of readings from buoy AD10 where `PRES` is between 100 and 200 dbar.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 100.0 AND 200.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 900.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 900;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is between 28.75 and 28.76 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP BETWEEN 28.75 AND 28.76;"
+  },
+  {
+    "input": "What is the maximum pressure recorded by buoy AD10 where salinity is above 34.8?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.8;"
+  },
+  {
+    "input": "Show the average salinity from buoy AD10 for readings taken in the last 12 hours (relative to latest data point).",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND time >= DATETIME('2025-01-31 23:56:21', '-12 hours');"
+  },
+  {
+    "input": "Find the lowest `N_LEVELS` for buoy AD10 where pressure is greater than 1500 dbar.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1500.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1000.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1000;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 10.0 dbar and `PSAL` is below 34.8.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 10.0 AND PSAL < 34.8;"
+  },
+  {
+    "input": "What is the count of all data points for buoy AD10 that have temperature values between 28.9 and 29.0 degrees?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND TEMP BETWEEN 28.9 AND 29.0;"
+  },
+  {
+    "input": "Show the latitude and longitude for buoy AD10 at its earliest recorded timestamp.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the average temperature for buoy CB02 at pressures between 5.0 and 10.0 dbar.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 5.0 AND 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1100.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1100;"
+  },
+  {
+    "input": "List all readings from buoy AD10 where `PRES` is less than 50.0 dbar and `PSAL` is exactly 33.875.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 0 AND PRES < 50.0 AND PSAL = 33.875;"
+  },
+  {
+    "input": "What is the maximum temperature recorded by buoy CB02 at `N_LEVELS` 5?",
+    "output": "SELECT MAX(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 5;"
+  },
+  {
+    "input": "Show the most recent salinity reading from buoy AD10 where the pressure is above 1000 dbar.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of `N_PROF` values that have recorded a minimum temperature below 10 degrees.",
+    "output": "SELECT N_PROF, MIN(TEMP) FROM argo_float_data GROUP BY N_PROF HAVING MIN(TEMP) < 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1200.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1200;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.0 degrees and `PSAL` is above 34.0.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0 AND PSAL > 34.0;"
+  },
+  {
+    "input": "What is the overall minimum `TEMP` for buoy AD10?",
+    "output": "SELECT MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the average pressure from buoy AD10 for readings taken from 2025-01-31 23:56:00 to 2025-01-31 23:56:21.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-31 23:56:00' AND '2025-01-31 23:56:21';"
+  },
+  {
+    "input": "Find the total number of distinct `N_LEVELS` in the dataset for all buoys.",
+    "output": "SELECT COUNT(DISTINCT N_LEVELS) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1300.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1300;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 19.0 dbar and `TEMP` is below 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 19.0 AND TEMP < 28.7;"
+  },
+  {
+    "input": "What is the average temperature for buoy CB02 across all data points?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the latest temperature from buoy AD10 at a depth less than 50 dbar.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES < 50.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of readings from buoy AD10 where the `latitude` is exactly -8.2858 and `longitude` is 107.0376.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND latitude = -8.2858 AND longitude = 107.0376;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1400.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1400;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is exactly 34.78 and `PRES` is 3.1.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78 AND PRES = 3.1;"
+  },
+  {
+    "input": "What is the range of temperature for buoy CB02 (max - min)?",
+    "output": "SELECT MAX(TEMP) - MIN(TEMP) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the average salinity for buoy AD10 for readings taken from 2025-01-31 23:00:00 to 2025-01-31 23:30:00.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-31 23:00:00' AND '2025-01-31 23:30:00';"
+  },
+  {
+    "input": "Find the earliest pressure reading from buoy AD10 where the temperature is below 20 degrees.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 20.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1500.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1500;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is above 28.75 degrees and `PRES` is less than 5.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.75 AND PRES < 5.0;"
+  },
+  {
+    "input": "What is the most frequent pressure value for buoy AD10?",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 GROUP BY PRES ORDER BY COUNT(*) DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the maximum salinity from buoy CB02 at `N_LEVELS` 1.",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS = 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_PROF` values that have recorded at least one reading with salinity greater than 34.8.",
+    "output": "SELECT COUNT(DISTINCT N_PROF) FROM argo_float_data WHERE PSAL > 34.8;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1600.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1600;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is between 3.0 and 7.0 dbar and `TEMP` is exactly 28.759.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 3.0 AND 7.0 AND TEMP = 28.759;"
+  },
+  {
+    "input": "What is the average `N_LEVELS` for buoy AD10 for readings with a temperature above 28.9 degrees?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9;"
+  },
+  {
+    "input": "Show the earliest temperature and salinity from buoy AD10 for `N_LEVELS` 0.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the sum of all `PRES` values for buoy CB02.",
+    "output": "SELECT SUM(PRES) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1700.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1700;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.5 degrees and `PSAL` is above 34.75.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.5 AND PSAL > 34.75;"
+  },
+  {
+    "input": "What is the minimum temperature at the highest pressure for buoy AD10?",
+    "output": "SELECT MIN(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES = (SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0);"
+  },
+  {
+    "input": "Show the latest pressure and `N_LEVELS` from buoy AD10.",
+    "output": "SELECT PRES, N_LEVELS FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_LEVELS` values that were sampled by buoy AD10 and had a temperature above 28 degrees.",
+    "output": "SELECT COUNT(DISTINCT N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1800.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1800;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is greater than 15.0 dbar and `N_LEVELS` is 15.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 15.0 AND N_LEVELS = 15;"
+  },
+  {
+    "input": "What is the average `N_LEVELS` for all data points where the pressure is exactly 50 dbar?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE PRES = 50.0;"
+  },
+  {
+    "input": "Show the minimum `N_LEVELS` recorded for buoy AD10 with temperature above 28.9 degrees.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9;"
+  },
+  {
+    "input": "Find the latest salinity reading from buoy CB02 at a depth between 15 and 20 meters.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 15.0 AND 20.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1900.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1900;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is above 28.7 degrees and `latitude` is exactly -0.6992616666666667.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.7 AND latitude = -0.6992616666666667;"
+  },
+  {
+    "input": "What is the highest `N_LEVELS` for buoy CB02 at a temperature below 28 degrees?",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0;"
+  },
+  {
+    "input": "Show the earliest recorded pressure from buoy AD10 where the salinity is above 34.0 PSU.",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the average temperature for buoy CB02 for readings with `PRES` between 3.0 and 10.0 dbar.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 3.0 AND 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 981.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 981;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is exactly 34.78 and `N_LEVELS` is 0.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "What is the overall average pressure for buoy CB02?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Show the average temperature for buoy AD10 for readings taken around 23:56:21 on January 31, 2025.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND time LIKE '2025-01-31 23:56:21%';"
+  },
+  {
+    "input": "Find the count of distinct `N_PROF` values that have recorded a pressure below 10 dbar.",
+    "output": "SELECT COUNT(DISTINCT N_PROF) FROM argo_float_data WHERE PRES < 10.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 50.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 50;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.7 degrees and `longitude` is 77.99821166666666.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7 AND longitude = 77.99821166666666;"
+  },
+  {
+    "input": "What is the latest `N_LEVELS` recorded for buoy AD10?",
+    "output": "SELECT N_LEVELS FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Show the average salinity from buoy CB02 for readings with `N_LEVELS` between 0 and 5.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS BETWEEN 0 AND 5;"
+  },
+  {
+    "input": "Find the earliest `N_LEVELS` recorded for buoy AD10 at a pressure less than 10.0 dbar.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND PRES < 10.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 100.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 100;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is exactly 7.1 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES = 7.1;"
+  },
+  {
+    "input": "What is the median pressure for buoy AD10 (approximate median)?",
+    "output": "SELECT PRES FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0) / 2;"
+  },
+  {
+    "input": "Show the overall maximum `N_LEVELS` in the entire dataset.",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data;"
+  },
+  {
+    "input": "Find the count of distinct longitudes that have recorded a temperature above 28 degrees for buoy AD10.",
+    "output": "SELECT COUNT(DISTINCT longitude) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 150.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 150;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is below 34.78 and `PRES` is above 10.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL < 34.78 AND PRES > 10.0;"
+  },
+  {
+    "input": "What is the latest time a temperature below 28 degrees was recorded by buoy AD10?",
+    "output": "SELECT MAX(time) FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 28.0;"
+  },
+  {
+    "input": "Show the average pressure for buoy AD10 for readings with an even `N_LEVELS` and pressure less than 100 dbar.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 0 AND PRES < 100.0;"
+  },
+  {
+    "input": "Find the earliest `N_LEVELS` recorded for buoy CB02.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 200.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 200;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is exactly 28.756 and `PSAL` is 34.779.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP = 28.756 AND PSAL = 34.779;"
+  },
+  {
+    "input": "What is the highest pressure recorded by any buoy for a temperature below 5 degrees?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE TEMP < 5.0;"
+  },
+  {
+    "input": "Show the latest latitude and longitude for buoy AD10 with a temperature above 28 degrees.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the total number of distinct latitude values in the dataset.",
+    "output": "SELECT COUNT(DISTINCT latitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 250.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 250;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 10.0 dbar and `N_LEVELS` is 10.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 10.0 AND N_LEVELS = 10;"
+  },
+  {
+    "input": "What is the median `N_LEVELS` for buoy AD10 (approximate median)?",
+    "output": "SELECT N_LEVELS FROM argo_float_data WHERE N_PROF = 0 ORDER BY N_LEVELS LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0) / 2;"
+  },
+  {
+    "input": "Show the average salinity from buoy AD10 for readings taken between 23:55:00 and 23:57:00 on January 31, 2025.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-31 23:55:00' AND '2025-01-31 23:57:00';"
+  },
+  {
+    "input": "Find the most frequent salinity value for buoy CB02.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 1 GROUP BY PSAL ORDER BY COUNT(*) DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 300.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 300;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.0 degrees and `N_LEVELS` is 16.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0 AND N_LEVELS = 16;"
+  },
+  {
+    "input": "What is the average pressure recorded for buoy AD10 when salinity is above 34.8?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.8;"
+  },
+  {
+    "input": "Show the maximum temperature and its corresponding time from buoy CB02.",
+    "output": "SELECT TEMP, time FROM argo_float_data WHERE N_PROF = 1 ORDER BY TEMP DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct longitudes in the dataset where the temperature is greater than 25 degrees.",
+    "output": "SELECT COUNT(DISTINCT longitude) FROM argo_float_data WHERE TEMP > 25.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 350.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 350;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is exactly 34.78 and `longitude` is 77.99821166666666.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78 AND longitude = 77.99821166666666;"
+  },
+  {
+    "input": "What is the average temperature for buoy AD10 at a depth between 500 and 1000 dbar?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 500.0 AND 1000.0;"
+  },
+  {
+    "input": "Show the minimum `N_LEVELS` recorded for buoy AD10 that has a temperature above 28.9 degrees and a pressure less than 100 dbar.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.9 AND PRES < 100.0;"
+  },
+  {
+    "input": "Find the earliest `N_LEVELS` recorded for buoy AD10 where the salinity is above 34.5 PSU.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND PSAL > 34.5 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 450.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 450;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 10.0 dbar and `N_LEVELS` is 1.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 10.0 AND N_LEVELS = 1;"
+  },
+  {
+    "input": "What is the maximum pressure recorded by buoy AD10 where the `N_LEVELS` is 100?",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 100;"
+  },
+  {
+    "input": "Show the latest temperature and salinity for buoy AD10 at a `N_LEVELS` of 10.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 10 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the average `N_LEVELS` for buoy AD10 for all its measurements.",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 550.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 550;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.7 degrees and `N_LEVELS` is 7.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7 AND N_LEVELS = 7;"
+  },
+  {
+    "input": "What is the minimum overall `PSAL` recorded for buoy AD10?",
+    "output": "SELECT MIN(PSAL) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the count of readings from buoy AD10 for each specific hour on January 31, 2025.",
+    "output": "SELECT STRFTIME('%H', time) AS Hour, COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND DATE(time) = '2025-01-31' GROUP BY Hour ORDER BY Hour;"
+  },
+  {
+    "input": "Find the latitude and longitude for buoy AD10 when the `N_LEVELS` was 0.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0 LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 650.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 650;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is above 34.78 and `TEMP` is below 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL > 34.78 AND TEMP < 28.7;"
+  },
+  {
+    "input": "What is the median temperature for buoy AD10 at pressures above 1000 dbar (approximate median)?",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0 ORDER BY TEMP LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1000.0) / 2;"
+  },
+  {
+    "input": "Show the total number of entries for buoy AD10.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Find the highest salinity from buoy AD10 at a depth between 500 and 1000 dbar.",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 500.0 AND 1000.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 750.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 750;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is between 15.0 and 20.0 dbar and `PSAL` is exactly 34.788.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 15.0 AND 20.0 AND PSAL = 34.788;"
+  },
+  {
+    "input": "What is the average pressure for buoy AD10 for readings at `N_LEVELS` 0?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "Show the temperature and salinity from buoy AD10 for the latest reading at a pressure above 1900 dbar.",
+    "output": "SELECT TEMP, PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1900.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_LEVELS` values sampled by buoy CB02.",
+    "output": "SELECT COUNT(DISTINCT N_LEVELS) FROM argo_float_data WHERE N_PROF = 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 850.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 850;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.0 degrees and `PRES` is above 10.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0 AND PRES > 10.0;"
+  },
+  {
+    "input": "What is the standard deviation of `N_LEVELS` for buoy AD10?",
+    "output": "SELECT STDEV(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the earliest temperature and pressure from buoy AD10 at a `N_LEVELS` of 5.",
+    "output": "SELECT TEMP, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 5 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the latitude and longitude for buoy CB02 at its deepest measurement.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 1 ORDER BY PRES DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 950.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 950;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is above 34.78 and `N_LEVELS` is 1.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL > 34.78 AND N_LEVELS = 1;"
+  },
+  {
+    "input": "What is the average pressure for buoy AD10 for readings with an odd `N_LEVELS`?",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 1;"
+  },
+  {
+    "input": "Show the overall minimum longitude in the entire dataset.",
+    "output": "SELECT MIN(longitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Find the latest salinity reading from buoy AD10 at a depth greater than 1500 dbar.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1500.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1050.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1050;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.7 degrees and `N_LEVELS` is 0.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "What is the overall maximum `latitude` in the dataset?",
+    "output": "SELECT MAX(latitude) FROM argo_float_data;"
+  },
+  {
+    "input": "Show the average temperature for buoy AD10 for readings taken from midnight to 6 am on January 31, 2025.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND time BETWEEN '2025-01-31 00:00:00' AND '2025-01-31 06:00:00';"
+  },
+  {
+    "input": "Find the count of readings from buoy AD10 where the `PRES` is exactly 10.0 dbar and `TEMP` is 28.937.",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 10.0 AND TEMP = 28.937;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1150.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1150;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 12.0 dbar and `TEMP` is below 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 12.0 AND TEMP < 28.7;"
+  },
+  {
+    "input": "What is the maximum salinity for buoy AD10 at `N_LEVELS` 200?",
+    "output": "SELECT MAX(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 200;"
+  },
+  {
+    "input": "Show the latest `N_LEVELS` and temperature for buoy AD10 at a pressure between 1000 and 1500 dbar.",
+    "output": "SELECT N_LEVELS, TEMP FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 1000.0 AND 1500.0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the average pressure for buoy AD10 for readings with `N_LEVELS` greater than 500.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS > 500;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1250.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1250;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is between 34.78 and 34.79 and `TEMP` is above 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL BETWEEN 34.78 AND 34.79 AND TEMP > 28.7;"
+  },
+  {
+    "input": "What is the minimum pressure recorded by buoy AD10 for a temperature below 10 degrees?",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 10.0;"
+  },
+  {
+    "input": "Show the total count of measurements from buoy AD10 taken in the last 24 hours (relative to latest data point).",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND time >= DATETIME('2025-01-31 23:56:21', '-24 hours');"
+  },
+  {
+    "input": "Find the average temperature for buoy CB02 for readings taken from 23:50:00 on January 31, 2025, to the end of the day.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND time BETWEEN '2025-01-31 23:50:00' AND '2025-01-31 23:59:59';"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1350.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1350;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is above 18.0 dbar and `PSAL` is above 34.78.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES > 18.0 AND PSAL > 34.78;"
+  },
+  {
+    "input": "What is the overall highest `N_LEVELS` recorded for buoy AD10?",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0;"
+  },
+  {
+    "input": "Show the average salinity from buoy AD10 for readings with an odd `N_LEVELS`.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS % 2 = 1;"
+  },
+  {
+    "input": "Find the earliest `N_LEVELS` recorded for buoy AD10 where the temperature is below 5 degrees.",
+    "output": "SELECT MIN(N_LEVELS) FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 5.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1450.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1450;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.7 degrees and `PRES` is between 5.0 and 10.0 dbar.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7 AND PRES BETWEEN 5.0 AND 10.0;"
+  },
+  {
+    "input": "What is the count of all measurements for buoy AD10 that have a `N_LEVELS` of 0?",
+    "output": "SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0;"
+  },
+  {
+    "input": "Show the maximum pressure recorded by buoy AD10 at `N_LEVELS` 50.",
+    "output": "SELECT MAX(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 50;"
+  },
+  {
+    "input": "Find the average temperature for buoy CB02 for readings with `N_LEVELS` between 0 and 10.",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 1 AND N_LEVELS BETWEEN 0 AND 10;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1550.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1550;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PSAL` is exactly 34.78 and `TEMP` is below 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PSAL = 34.78 AND TEMP < 28.7;"
+  },
+  {
+    "input": "What is the median `PSAL` for buoy AD10 at a depth of 100 dbar (approximate median)?",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND PRES = 100.0 ORDER BY PSAL LIMIT 1 OFFSET (SELECT COUNT(*) FROM argo_float_data WHERE N_PROF = 0 AND PRES = 100.0) / 2;"
+  },
+  {
+    "input": "Show the earliest salinity reading from buoy AD10 at the lowest pressure.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 ORDER BY PRES ASC, time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the count of distinct `N_PROF` values that have recorded a maximum temperature above 28 degrees.",
+    "output": "SELECT N_PROF, MAX(TEMP) FROM argo_float_data GROUP BY N_PROF HAVING MAX(TEMP) > 28.0;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1650.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1650;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is between 0 and 10 dbar and `TEMP` is above 28.7 degrees.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES BETWEEN 0.0 AND 10.0 AND TEMP > 28.7;"
+  },
+  {
+    "input": "What is the average `N_LEVELS` for all readings from buoy CB02 where pressure is less than 10.0 dbar?",
+    "output": "SELECT AVG(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND PRES < 10.0;"
+  },
+  {
+    "input": "Show the latest temperature from buoy AD10 at `N_LEVELS` 0.",
+    "output": "SELECT TEMP FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Find the minimum pressure recorded by buoy AD10 where the temperature is below 28.9 degrees and salinity is 33.875.",
+    "output": "SELECT MIN(PRES) FROM argo_float_data WHERE N_PROF = 0 AND TEMP < 28.9 AND PSAL = 33.875;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1750.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1750;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.7 degrees and `PSAL` is above 34.78.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.7 AND PSAL > 34.78;"
+  },
+  {
+    "input": "What is the average temperature for buoy AD10 at pressures between 1500 and 1600 dbar?",
+    "output": "SELECT AVG(TEMP) FROM argo_float_data WHERE N_PROF = 0 AND PRES BETWEEN 1500.0 AND 1600.0;"
+  },
+  {
+    "input": "Show the average salinity for buoy AD10 for readings with a pressure greater than 1900 dbar.",
+    "output": "SELECT AVG(PSAL) FROM argo_float_data WHERE N_PROF = 0 AND PRES > 1900.0;"
+  },
+  {
+    "input": "Find the latitude and longitude for buoy AD10 at its latest measurement.",
+    "output": "SELECT latitude, longitude FROM argo_float_data WHERE N_PROF = 0 ORDER BY time DESC LIMIT 1;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1850.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1850;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `PRES` is exactly 4.7 dbar and `TEMP` is 28.754.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND PRES = 4.7 AND TEMP = 28.754;"
+  },
+  {
+    "input": "What is the max `N_LEVELS` for buoy CB02 for temperatures above 28.7 degrees?",
+    "output": "SELECT MAX(N_LEVELS) FROM argo_float_data WHERE N_PROF = 1 AND TEMP > 28.7;"
+  },
+  {
+    "input": "Show the earliest salinity reading from buoy AD10 with a temperature above 28 degrees.",
+    "output": "SELECT PSAL FROM argo_float_data WHERE N_PROF = 0 AND TEMP > 28.0 ORDER BY time ASC LIMIT 1;"
+  },
+  {
+    "input": "Find the average pressure for buoy AD10 for readings with an N_LEVELS between 0 and 50.",
+    "output": "SELECT AVG(PRES) FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS BETWEEN 0 AND 50;"
+  },
+  {
+    "input": "Retrieve the temperature, salinity, and pressure from buoy AD10 for `N_LEVELS` 1950.",
+    "output": "SELECT TEMP, PSAL, PRES FROM argo_float_data WHERE N_PROF = 0 AND N_LEVELS = 1950;"
+  },
+  {
+    "input": "List all readings from buoy CB02 where `TEMP` is below 28.0 degrees and `PSAL` is exactly 34.781.",
+    "output": "SELECT * FROM argo_float_data WHERE N_PROF = 1 AND TEMP < 28.0 AND PSAL = 34.781;"
+  }
+]
